@@ -9,35 +9,37 @@ def createDataSet():
     labels = ['A', 'A', 'B', 'B']
     return group, labels
 
-def classify0(inX, dataSet, labels, k):
-    dataSetSize = dataSet.shape[0]
-    diffMat = np.tile(inX, (dataSetSize, 1)) - dataSet
-    sqDiffMat = diffMat ** 2
-    sqDistances = sqDiffMat.sum(axis=1)
-    distances = sqDistances ** 0.5
-    sortedDistIndicies = np.argsort(distances)
-    classCount = {}
+def classify0(inX, dataset, labels, k):
+    dataset_size = dataset.shape[0]
+    diff_mat = np.tile(inX, (dataset_size, 1)) - dataSet
+    square_diff_mat = diff_mat ** 2
+    square_distances = square_diff_mat.sum(axis=1)
+    distances = square_distances ** 0.5
+    sorted_dist_indices = np.argsort(distances)
+    class_count = {}
     for i in range(k):
-        voteIlable = labels[sortedDistIndicies[i]]
-        #count the number of occurrence for each class, if new class appears, the starting number becomes 0
-        classCount[voteIlable] = classCount.get(voteIlable, 0) + 1
-    #return the number of classes of tuples and sort by second element(number of occurrence of each class in descending order)
-    sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse=True)
-    return sortedClassCount[0][0]
+        vote_lable = labels[sorted_dist_indices[i]]
+# count the number of occurrence for each class, if new class appears, the starting number becomes 0
+        class_count[vote_lable] = class_count.get(vote_lable, 0) + 1
+# return the number of classes of tuples and sort by second element(number of occurrence of each class in descending order)
+    sortedclasscount = sorted(class_count.iteritems(), key=operator.itemgetter(1), reverse=True)
+    return sortedclasscount[0][0]
 
 def file2matrix(filename):
     fr = open(filename)
-    numberOfLines = len(fr.readlines())
-    returnMat = np.zeros((numberOfLines, 3))
-    classLabelVector = []
+    numberoflines = len(fr.readlines())
+    return_mat = np.zeros((numberoflines, 3))
+    class_label_vector = []
     index = 0
     for line in fr.readlines():
+        # delete blank spaces at the beginning and the end of each line
         line = line.strip()
-        listFromLine = line.split('\t')
-        returnMat[index, :] = listFromLine[0:3]
-        classLabelVector.append(int(listFromLine[-1]))
+        #
+        list_from_line = line.split('\t')
+        return_mat[index, :] = list_from_line[0:3]
+        class_label_vector.append(int(list_from_line[-1]))
         index += 1
-    return returnMat, classLabelVector
+    return return_mat, class_label_vector
 
 
 
