@@ -4,12 +4,14 @@ import numpy as np
 import operator
 from os import listdir
 
+
 def createDataSet():
     group = np.array([[1.0, 1.1], [1.0, 1.0], [0, 0], [1, 0.1]])
     labels = ['A', 'A', 'B', 'B']
     return group, labels
 
-def classify0(inX, dataset, labels, k):
+
+def classify0(x, dataset, labels, k):
     dataset_size = dataset.shape[0]
     diff_mat = np.tile(inX, (dataset_size, 1)) - dataSet
     square_diff_mat = diff_mat ** 2
@@ -25,6 +27,7 @@ def classify0(inX, dataset, labels, k):
 # (number of occurrence of each class in descending order)
     sortedclasscount = sorted(class_count.iteritems(), key=operator.itemgetter(1), reverse=True)
     return sortedclasscount[0][0]
+
 
 def file2matrix(filename):
     fr = open(filename)
@@ -48,6 +51,7 @@ def file2matrix(filename):
         class_label_vector.append(int(list_from_line[-1]))
         index += 1
     return return_mat, class_label_vector
+
 
 
 
