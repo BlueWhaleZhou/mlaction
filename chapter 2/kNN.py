@@ -53,5 +53,13 @@ def file2matrix(filename):
     return return_mat, class_label_vector
 
 
+def autonorm(dataset):
+    min_vals = np.amin(dataset, axis=1)
+    max_vals = np.amax(dataset, axis=1)
+    ranges = max_vals - min_vals
+    norm_dataset = np.zeros(dataset.shape)
+    norm_dataset = (dataset - min_vals) / (max_vals - min_vals)
+
+
 
 
