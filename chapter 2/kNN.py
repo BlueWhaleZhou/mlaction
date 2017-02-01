@@ -13,7 +13,7 @@ def createDataSet():
 
 def classify0(x, dataset, labels, k):
     dataset_size = dataset.shape[0]
-    diff_mat = np.tile(inX, (dataset_size, 1)) - dataSet
+    diff_mat = np.tile(x, (dataset_size, 1)) - dataSet
     square_diff_mat = diff_mat ** 2
     square_distances = square_diff_mat.sum(axis=1)
     distances = square_distances ** 0.5
@@ -30,6 +30,7 @@ def classify0(x, dataset, labels, k):
 
 
 def file2matrix(filename):
+    preference_dict = {'largeDoses': 3, 'smallDoses': 2, 'didntLike': 1}
     fr = open(filename)
     array_lines = fr.readlines()
     numberoflines = len(array_lines)
@@ -49,7 +50,10 @@ def file2matrix(filename):
         # split data values according to \t
         list_from_line = line.split('\t')
         return_mat[index, :] = list_from_line[0:3]
-        class_label_vector.append(int(list_from_line[-1]))
+        if list_from_line[-1].isdigit():
+            class_label_vector.append(int(list_from_line[-1]))
+        else:
+            class_label_vector.append(preference_dict.get(list_from_line[-1]))
         index += 1
     return return_mat, class_label_vector
 
