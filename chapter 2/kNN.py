@@ -5,7 +5,7 @@ import operator
 from os import listdir
 
 
-def createDataSet():
+def createdataset():
     group = np.array([[1.0, 1.1], [1.0, 1.0], [0, 0], [1, 0.1]])
     labels = ['A', 'A', 'B', 'B']
     return group, labels
@@ -33,18 +33,12 @@ def file2matrix(filename):
     preference_dict = {'largeDoses': 3, 'smallDoses': 2, 'didntLike': 1}
     fr = open(filename)
     array_lines = fr.readlines()
-    numberoflines = len(array_lines)
+    number_of_lines = len(array_lines)
     # initialize a matrix with size: number of lines x 3
-    return_mat = np.zeros((numberoflines, 3))
+    return_mat = np.zeros((number_of_lines, 3))
     class_label_vector = []
     index = 0
     for line in array_lines:
-        '''
-        line = line.strip()
-        list = line.split('\t')
-        return_mat[index, :] = list[0:3]
-        class_label_vector.append(list[-1])
-        '''
         # delete blank spaces at the beginning and the end of each line
         line = line.strip()
         # split data values according to \t
@@ -56,6 +50,17 @@ def file2matrix(filename):
             class_label_vector.append(preference_dict.get(list_from_line[-1]))
         index += 1
     return return_mat, class_label_vector
+'''
+ figure plotting:
+    import matplot
+    import matplot.pyplot as plt
+
+    data_matrix, labels = kNN.file2matrix(filename)
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.scatter(data_matrix[:, 1], data_matrix[:, 2], 15.0*np.array(labels), 15.0*np.array(labels))
+    plt.show()
+'''
 
 
 def autonorm(dataset):
