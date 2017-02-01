@@ -31,12 +31,13 @@ def classify0(x, dataset, labels, k):
 
 def file2matrix(filename):
     fr = open(filename)
-    numberoflines = len(fr.readlines())
+    array_lines = fr.readlines()
+    numberoflines = len(array_lines)
     # initialize a matrix with size: number of lines x 3
     return_mat = np.zeros((numberoflines, 3))
     class_label_vector = []
     index = 0
-    for line in fr.readlines():
+    for line in array_lines:
         '''
         line = line.strip()
         list = line.split('\t')
