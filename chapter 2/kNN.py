@@ -64,11 +64,13 @@ def file2matrix(filename):
 
 
 def autonorm(dataset):
-    min_vals = np.amin(dataset, axis=1)
-    max_vals = np.amax(dataset, axis=1)
+    min_vals = np.amin(dataset, axis=0)
+    max_vals = np.amax(dataset, axis=0)
     ranges = max_vals - min_vals
-    norm_dataset = np.zeros(dataset.shape)
-    norm_dataset = (dataset - min_vals) / (max_vals - min_vals)
+    length = dataset.shape[0]
+    norm_dataset = dataset - np.tile(min_vals, (length, 1))
+    norm_dataset = norm_dataset / np.tile(ranges, (length, 1))
+    return norm_dataset, ranges, min_vals
 
 
 
