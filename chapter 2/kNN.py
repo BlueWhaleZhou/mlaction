@@ -73,5 +73,20 @@ def autonorm(dataset):
     return norm_dataset, ranges, min_vals
 
 
+def dating_class_test():
+    ho_ratio = 0.10
+    dating_matrix, dating_labels = file2matrix('datingTestSet.txt')
+    norm_matrix, ranges, min_vals = autonorm(dating_matrix)
+    length = norm_matrix.shape[0]
+    num_test_vector = int(length * ho_ratio)
+    error_count = 0
+    for i in range(num_test_vector):
+        classifier_result = classify0(norm_matrix[i, :], norm_matrix[num_test_vector:length, :], dating_labels[num_test_vector:length], 3)
+        print "The testing result is: %d, the correct answer is: %d" % (classifier_result, dating_labels[i])
+        if (classifier_result != dating_labels[i]):
+            error_count += 1.0
+    print 'The total number of testing error is : %d' % (error_count)
+    print 'Error rate is : %f' % (error_count / float(num_test_vector))
+
 
 
