@@ -13,7 +13,7 @@ def createdataset():
 
 def classify0(x, dataset, labels, k):
     dataset_size = dataset.shape[0]
-    diff_mat = np.tile(x, (dataset_size, 1)) - dataSet
+    diff_mat = np.tile(x, (dataset_size, 1)) - dataset
     square_diff_mat = diff_mat ** 2
     square_distances = square_diff_mat.sum(axis=1)
     distances = square_distances ** 0.5
