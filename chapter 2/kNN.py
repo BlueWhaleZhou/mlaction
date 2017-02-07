@@ -74,7 +74,7 @@ def autonorm(dataset):
 
 
 def dating_class_test():
-    ho_ratio = 0.10
+    ho_ratio = 0.4
     dating_matrix, dating_labels = file2matrix('datingTestSet.txt')
     norm_matrix, ranges, min_vals = autonorm(dating_matrix)
     length = norm_matrix.shape[0]
