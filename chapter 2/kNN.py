@@ -25,8 +25,8 @@ def classify0(x, dataset, labels, k):
         class_count[vote_lable] = class_count.get(vote_lable, 0) + 1
 # return the number of classes of tuples and sort by second element
 # (number of occurrence of each class in descending order)
-    sortedclasscount = sorted(class_count.iteritems(), key=operator.itemgetter(1), reverse=True)
-    return sortedclasscount[0][0]
+    sorted_class_count = sorted(class_count.iteritems(), key=operator.itemgetter(1), reverse=True)
+    return sorted_class_count[0][0]
 
 
 def file2matrix(filename):
@@ -50,6 +50,8 @@ def file2matrix(filename):
             class_label_vector.append(preference_dict.get(list_from_line[-1]))
         index += 1
     return return_mat, class_label_vector
+
+
 '''
  figure plotting:
     import matplot
@@ -74,14 +76,14 @@ def autonorm(dataset):
 
 
 def dating_class_test():
-    ho_ratio = 0.4
+    ho_ratio = 0.10
     dating_matrix, dating_labels = file2matrix('datingTestSet.txt')
     norm_matrix, ranges, min_vals = autonorm(dating_matrix)
     length = norm_matrix.shape[0]
     num_test_vector = int(length * ho_ratio)
     error_count = 0
     for i in range(num_test_vector):
-        classifier_result = classify0(norm_matrix[i, :], norm_matrix[num_test_vector:length, :], dating_labels[num_test_vector:length], 3)
+        classifier_result = classify0(norm_matrix[i, :], norm_matrix[num_test_vector:length, :], dating_labels[num_test_vector:length], 5)
         print "The testing result is: %d, the correct answer is: %d" % (classifier_result, dating_labels[i])
         if (classifier_result != dating_labels[i]):
             error_count += 1.0
@@ -89,4 +91,14 @@ def dating_class_test():
     print 'Error rate is : %f' % (error_count / float(num_test_vector))
 
 
-
+def classify_person():
+    result_list = ['not at all', 'in small doses', 'in large doses']
+    percent_tats = float(raw_input("percentage of time spent playing video games?"))
+    ff_miles = float(raw_input("frequent flier miles earned per year?"))
+    ice_cream = float(raw_input("liters of ice cream consumed per year?"))
+    dating_matrix, dating_labels = file2matrix('datingTestSet.txt')
+    norm_matrix, ranges, min_vals = autonorm(dating_matrix)
+    input_array = np.array([ff_miles, percent_tats, ice_cream])
+    classifier_result = classify0((input_array - min_vals) / ranges, norm_matrix, dating_labels, 5)
+    print "You will probably like this persor:", result_list[classifier_result - 1]
+    # 'result - 1' since preference_dict from file2matrix function
