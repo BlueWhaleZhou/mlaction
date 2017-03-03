@@ -32,11 +32,15 @@ def words2vec(vocab_list, input_set):
 def train_nb(train_matrix, train_category):
     num_train_docs = len(train_matrix)
     num_words = len(train_matrix[0])
-    p_abusive = sum(train_category) / float(num_train_docs)
-    p0_num = np.zeros(num_words)
-    p1_num = np.zeros(num_words)
+    p_c1 = sum(train_category) / float(num_train_docs)
+    p_w_c1 = np.zeros(num_words)
+    p_w_c0 = np.zeros(num_words)
     p0_denom = float(0)
     p1_denom = float(0)
+    for i in range(num_train_docs):
+        if train_category[i] == 1:
+
+
 
 
 
