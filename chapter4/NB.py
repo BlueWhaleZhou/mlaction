@@ -39,6 +39,16 @@ def train_nb(train_matrix, train_category):
     p1_denom = float(0)
     for i in range(num_train_docs):
         if train_category[i] == 1:
+            p_w_c1 += train_matrix[i]
+            p1_denom += sum(train_matrix[i])
+        else:
+            p_w_c0 += train_matrix[i]
+            p0_denom += sum(train_matrix[i])
+    p1_vec = p_w_c1 / p1_denom
+    p0_vec = p_w_c0 / p0_denom
+
+    return p_c1, p1_vec, p0_vec
+
 
 
 
