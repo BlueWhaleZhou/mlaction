@@ -32,6 +32,7 @@ def words2vec(vocab_list, input_set):
 def train_nb(train_matrix, train_category):
     num_train_docs = len(train_matrix)
     num_words = len(train_matrix[0])
+    # p_c0 = 1 - p_c1 for binary classes
     p_c1 = sum(train_category) / float(num_train_docs)
     # initialize numerator and denominator for p(wi|c1) and p(wi|c0):
     p_w_c1 = np.zeros(num_words)
@@ -48,7 +49,7 @@ def train_nb(train_matrix, train_category):
     p1_vec = p_w_c1 / p1_denom
     p0_vec = p_w_c0 / p0_denom
 
-    return p_c1, p1_vec, p0_vec
+    return p0_vec, p1_vec, p_c1
 
 
 
